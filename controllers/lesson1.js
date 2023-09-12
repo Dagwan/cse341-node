@@ -1,8 +1,8 @@
 const dagwanRoute = (req, res) => {
-  res.send("Dagwan Pan'an Danladi");
+  res.send("Nanret Pan'an");
 }
 const emmanuelRoute = (req, res) => {
-    res.send("Emmanuel Pan'an Danladi");
+    res.send("Emmanuel Daniel");
   }
 
   const adamsRoute = (req, res) => {
