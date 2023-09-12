@@ -2,7 +2,7 @@
 const routes = require('express').Router();
 
 // Import the lesson1Controller module, which contains controller functions.
-const lesson1Controller = require('../controllers/lesson1');
+const lesson1Controller = require('../controllers');
 
 // Define a route that handles HTTP GET requests at the root path ('/').
 routes.get('/', lesson1Controller.nanretRoute);
