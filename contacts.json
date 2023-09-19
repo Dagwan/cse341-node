@@ -1,0 +1,24 @@
+[
+    {
+      "firstName": "Nanret",
+      "lastName": "Pan'an",
+      "email": "nanretdan@gmail.com",
+      "favoriteColor": "Orange",
+      "birthday": "2002-07-1"
+    },
+    {
+      "firstName": "Emmanuel",
+      "lastName": "Daniel",
+      "email": "emmanuel@gmail.com",
+      "favoriteColor": "Blue",
+      "birthday": "1998-11-17"
+    },
+    {
+      "firstName": "Bovic",
+      "lastName": "David",
+      "email": "bovis@gmail.com",
+      "favoriteColor": "Purple",
+      "birthday": "2002-12-19"
+    }
+  ]
+  

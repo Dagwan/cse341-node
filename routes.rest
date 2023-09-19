@@ -1,0 +1,11 @@
+// LOCALHOST
+###
+GET http://localhost:8080/api/contacts
+###
+GET http://localhost:8080/api/contacts/6509a8f2efdfa9114ee07dd7
+###
+GET http://localhost:8080/api/contacts/6509a8f2efdfa9114ee07dda
+###
+GET http://localhost:8080/api/contacts/6509a8f3efdfa9114ee07ddd
+
+// production
