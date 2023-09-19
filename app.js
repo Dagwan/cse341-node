@@ -1,6 +1,6 @@
 const express = require('express');
-const connectDB = require('./db');
-const Contact = require('./contact'); // Adjust the path accordingly
+const connectDB = require('./db/db');
+const Contact = require('./models/contactModel'); // Adjust the path accordingly
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
@@ -14,7 +14,7 @@ connectDB();
 
 app.use(express.json());
 
-const routes = require('./routes'); // Adjust the path accordingly
+const routes = require('./routes/contactRoutes'); // Adjust the path accordingly
 
 app.use('/api', routes);
 
