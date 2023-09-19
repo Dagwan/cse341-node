@@ -1,21 +1,29 @@
+// Import required modules and dependencies
 const express = require('express');
 const connectDB = require('./db/db');
-const Contact = require('./models/contactModel'); // Adjust the path accordingly
+const Contact = require('./models/contactModel'); 
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 
+// Load environment variables from .env file
 dotenv.config();
 
+// Create an Express application
 const app = express();
+// Define the port for the server, defaulting to 8080 if not provided
 const PORT = process.env.PORT || 8080;
 
+// Connect to the MongoDB database using the connectDB function
 connectDB();
 
+// Parse incoming JSON data in requests
 app.use(express.json());
 
-const routes = require('./routes/contactRoutes'); // Adjust the path accordingly
+// Import the contactRoutes from the 'routes' folder (adjust the path accordingly)
+const routes = require('./routes/contactRoutes');
 
+// Use the contactRoutes for any routes under the '/api' path
 app.use('/api', routes);
 
 // Load data from contacts.json
