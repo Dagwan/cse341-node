@@ -1,5 +1,5 @@
 {
-  "name": "personal-assignment",
+  "name": "practice",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,14 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "author": "Dagwan",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "dotenv": "^16.0.0",
     "express": "^4.16.3",
-    "mongodb": "^4.4.0",
-    "mongoose": "^7.5.2"
+    "mongodb": "^4.4.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
