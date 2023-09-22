@@ -9,8 +9,10 @@ const connectDB = async () => {
   try {
     // Use Mongoose to establish a connection to the MongoDB database
     await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: 'mycontacts',
       useNewUrlParser: true,            // Use new URL parser
       useUnifiedTopology: true,         // Use new server discovery and monitoring engine
+      autoCreate: false, // Disable automatic creation
     });
 
     // If the connection is successful, log a success message
