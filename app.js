@@ -24,7 +24,7 @@ app.use(express.json());
 const routes = require('./routes/contactRoutes');
 
 // Use the contactRoutes for any routes under the '/api' path
-app.use('/api', routes);
+app.use('/contacts', routes);
 
 // Load data from contacts.json
 const contactsData = JSON.parse(

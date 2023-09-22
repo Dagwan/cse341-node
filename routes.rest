@@ -1,11 +1,11 @@
 // LOCALHOST
 ###
-GET http://localhost:8080/api/contacts
+GET http://localhost:8080/contacts
 ###
-GET http://localhost:8080/api/contacts/650db16828dcb0d0031437fe
+GET http://localhost:8080/contacts/650db16828dcb0d0031437fe
 ###
-GET http://localhost:8080/api/contacts/650db16928dcb0d003143801
+GET http://localhost:8080/contacts/650db16928dcb0d003143801
 ###
-GET http://localhost:8080/api/contacts/650db16928dcb0d003143804
+GET http://localhost:8080/contacts/650db16928dcb0d003143804
 
 // production
