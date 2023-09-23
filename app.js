@@ -20,11 +20,8 @@ connectDB();
 // Parse incoming JSON data in requests
 app.use(express.json());
 
-// Import the modified router with the base URL path (/contacts)
-const contactsRouter = require('./routes/contactRoutes');
-
 // Use the contactRoutes for any routes under the root path '/'
-app.use('/', contactsRouter);
+app.use('/', require('./routes/contactRoutes'));
 
 // Load data from contacts.json
 const contactsData = JSON.parse(
