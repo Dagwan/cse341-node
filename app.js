@@ -1,23 +1,58 @@
+// Import required modules and dependencies
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongodb = require('./db/connect');
+const connectDB = require('./db/db');
+const Contact = require('./models/contactModel'); 
+const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
 
-const port = process.env.PORT || 8080;
+// Load environment variables from .env file
+dotenv.config();
+
+// Create an Express application
 const app = express();
+// Define the port for the server, defaulting to 8080 if not provided
+const PORT = process.env.PORT || 8080;
 
-app
-  .use(bodyParser.json())
-  .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-  })
-  .use('/', require('./routes'));
+// Connect to the MongoDB database using the connectDB function
+connectDB();
 
-mongodb.initDb((err, mongodb) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port);
-    console.log(`Connected to DB and listening on ${port}`);
+// Parse incoming JSON data in requests
+app.use(express.json());
+
+// Import the contactRoutes from the 'routes' folder (adjust the path accordingly)
+const routes = require('./routes/contactRoutes');
+
+// Use the contactRoutes for any routes under the '/api' path
+app.use('/contacts', routes);
+
+// Load data from contacts.json
+const contactsData = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8')
+);
+
+// Function to populate the database with initial contacts
+const populateDatabase = async () => {
+  try {
+    for (const contactData of contactsData) {
+      // Check if a contact with the same email already exists
+      const existingContact = await Contact.findOne({ email: contactData.email });
+
+      if (!existingContact) {
+        const contact = new Contact(contactData);
+        await contact.save();
+      }
+    }
+
+    console.log('Database populated with initial contacts');
+  } catch (error) {
+    console.error('Error populating the database:', error);
   }
+};
+
+// Start the server after populating the database
+populateDatabase().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
