@@ -6,7 +6,7 @@ const contactController = require('../controllers/contactController');
 router.post('/contacts', contactController.createContact);
 
 // Read all contacts
-router.get('/contacts', contactController.getAllContacts);
+router.get('/', contactController.getAllContacts);
 
 // Read a contact by ID
 router.get('/contacts/:id', contactController.getContactById);
