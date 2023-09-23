@@ -58,7 +58,7 @@ exports.updateContactById = async (req, res) => {
     const updatedContact = await Contact.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true } // Return the updated contact
+      { new: true }
     );
 
     // If the contact is not found, respond with a not found status code (404) and an error message

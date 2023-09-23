@@ -12,7 +12,7 @@ const connectDB = async () => {
       dbName: 'mycontacts',
       useNewUrlParser: true,            // Use new URL parser
       useUnifiedTopology: true,         // Use new server discovery and monitoring engine
-      autoCreate: false, // Disable automatic creation
+      autoCreate: false,                // Disable automatic creation
     });
 
     // If the connection is successful, log a success message
