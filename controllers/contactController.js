@@ -10,8 +10,8 @@ exports.createContact = async (req, res) => {
     // Save the new contact to the database
     await contact.save();
 
-    // Respond with a success status code (201) and the created contact in JSON format
-    res.status(201).json(contact);
+    // Respond with a success status code (201) and the ID of the newly created contact in JSON format
+    res.status(201).json({ _id: contact._id });
   } catch (error) {
     // If there's an error during contact creation, respond with a server error status code (500) and an error message
     res.status(500).json({ error: 'Unable to create contact' });
@@ -51,23 +51,18 @@ exports.getContactById = async (req, res) => {
   }
 };
 
-// Update a contact by ID
 exports.updateContactById = async (req, res) => {
   try {
     // Find and update a contact by its ID with the data from the request body
-    const updatedContact = await Contact.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updatedContact = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
     // If the contact is not found, respond with a not found status code (404) and an error message
     if (!updatedContact) {
       return res.status(404).json({ error: 'Contact not found' });
     }
 
-    // Respond with the updated contact in JSON format
-    res.json(updatedContact);
+    // Respond with a 204 No Content status code
+    res.status(204).end();
   } catch (error) {
     // If there's an error while updating the contact, respond with a server error status code (500) and an error message
     res.status(500).json({ error: 'Unable to update contact' });

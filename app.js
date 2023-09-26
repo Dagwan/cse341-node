@@ -1,7 +1,7 @@
 // Import required modules and dependencies
 const express = require('express');
 const connectDB = require('./db/db');
-const Contact = require('./models/contactModel'); 
+const Contact = require('./models/contactModel');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
@@ -24,9 +24,7 @@ app.use(express.json());
 app.use('/', require('./routes/contactRoutes'));
 
 // Load data from contacts.json
-const contactsData = JSON.parse(
-  fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8')
-);
+const contactsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8'));
 
 // Function to populate the database with initial contacts
 const populateDatabase = async () => {
