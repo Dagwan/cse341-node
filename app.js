@@ -21,7 +21,7 @@ connectDB();
 app.use(express.json());
 
 // Use the contactRoutes for any routes under the root path '/'
-app.use('/', require('./routes/contactRoutes'));
+app.use('/contacts', require('./routes/contactRoutes'));
 
 // Load data from contacts.json
 const contactsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8'));
