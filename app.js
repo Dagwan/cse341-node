@@ -21,12 +21,14 @@ connectDB();
 // Parse incoming JSON data in requests
 app.use(express.json());
 
+// Define the base route path
+const baseRoutePath = '/contacts';
 
-// Use the contactRoutes under the '/contacts' path
-app.use('/contacts', require('./routes/contactRoutes'));
+// Use the contactRoutes under the defined base route path
+app.use(baseRoutePath, require('./routes/contactRoutes'));
 
 // Include the Swagger setup
-setupSwagger(app); 
+setupSwagger(app);
 
 // Load data from contacts.json
 const contactsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8'));
