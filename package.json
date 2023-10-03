@@ -8,7 +8,8 @@
     "start": "nodemon app.js",
     "prepare": "husky install",
     "format": "prettier --write \"**/*.js\"",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "swagger": "node ./swagger.js"
   },
   "author": "Dagwan",
   "license": "ISC",
