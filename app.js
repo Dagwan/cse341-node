@@ -1,6 +1,5 @@
 // Import required modules and dependencies
 const express = require('express');
-const cors = require('cors');
 const connectDB = require('./db/db');
 const Contact = require('./models/contactModel');
 const dotenv = require('dotenv');
@@ -23,22 +22,12 @@ connectDB();
 // Parse incoming JSON data in requests
 app.use(express.json());
 
-// Define the base route path
-const baseRoutePath = '/contacts';
+// Use the contactRoutes under the '/contacts' path
+app.use('/', require('./routes/contactRoutes'));
 
-// Use the contactRoutes under the defined base route path
-app.use(baseRoutePath, require('./routes/contactRoutes'));
 
 // Include the Swagger setup
 setupSwagger(app);
-
-// Enable CORS for your frontend domain
-const corsOptions = {
-  origin: 'https://cse341-contacts-frontend.netlify.app',
-  optionsSuccessStatus: 200, // Some legacy browsers (IE11) choke on 204
-};
-
-app.use(cors(corsOptions));
 
 // Load data from contacts.json
 const contactsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8'));
