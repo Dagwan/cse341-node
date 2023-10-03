@@ -23,7 +23,6 @@ connectDB();
 app.use(express.json());
 
 // Use the contactRoutes under the '/contacts' path
-app.use('/contacts', require('./routes/contactRoutes'));
 app.use('/', require('./routes/contactRoutes'));
 
 
