@@ -23,7 +23,7 @@ connectDB();
 app.use(express.json());
 
 // Use the contactRoutes under the '/contacts' path
-app.use('/', require('./routes/contactRoutes'));
+app.use('/contacts', require('./routes/contactRoutes'));
 
 
 // Include the Swagger setup
