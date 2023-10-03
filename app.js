@@ -23,7 +23,7 @@ app.use(express.json());
 
 
 // Use the contactRoutes for any routes under the root path '/'
-app.use('/contacts', require('./routes/contactRoutes'));
+app.use('/', require('./routes/contactRoutes'));
 
 // Include the Swagger setup
 setupSwagger(app); 
