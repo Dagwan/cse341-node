@@ -31,7 +31,7 @@ const contactController = require('../controllers/contactController');
  *               $ref: '#/components/schemas/Contact'
  */
 // Create a new contact
-router.post('/', contactController.createContact);
+router.post('/contacts', contactController.createContact);
 
 /**
  * @swagger
@@ -50,7 +50,7 @@ router.post('/', contactController.createContact);
  *                 $ref: '#/components/schemas/Contact'
  */
 // Read all contacts
-router.get('/', contactController.getAllContacts);
+router.get('/contacts', contactController.getAllContacts);
 
 /**
  * @swagger
@@ -76,7 +76,7 @@ router.get('/', contactController.getAllContacts);
  *         description: Contact not found
  */
 // Read a contact by ID
-router.get('/:id', contactController.getContactById);
+router.get('/contact/:id', contactController.getContactById);
 
 /**
  * @swagger
@@ -105,7 +105,7 @@ router.get('/:id', contactController.getContactById);
  *         description: Contact not found
  */
 // Update a contact by ID
-router.put('/:id', contactController.updateContactById);
+router.put('/contact/:id', contactController.updateContactById);
 
 /**
  * @swagger
@@ -127,6 +127,6 @@ router.put('/:id', contactController.updateContactById);
  *         description: Contact not found
  */
 // Delete a contact by ID
-router.delete('/:id', contactController.deleteContactById);
+router.delete('/contacts:id', contactController.deleteContactById);
 
 module.exports = router;
