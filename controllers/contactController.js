@@ -51,6 +51,7 @@ exports.getContactById = async (req, res) => {
   }
 };
 
+// Update contact
 exports.updateContactById = async (req, res) => {
   try {
     // Find and update a contact by its ID with the data from the request body

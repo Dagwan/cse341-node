@@ -5,6 +5,7 @@ const Contact = require('./models/contactModel');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
+const setupSwagger = require('./swagger');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,8 +21,12 @@ connectDB();
 // Parse incoming JSON data in requests
 app.use(express.json());
 
+
 // Use the contactRoutes for any routes under the root path '/'
-app.use('/', require('./routes/contactRoutes'));
+app.use('/contacts', require('./routes/contactRoutes'));
+
+// Include the Swagger setup
+setupSwagger(app); 
 
 // Load data from contacts.json
 const contactsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'contacts.json'), 'utf-8'));
