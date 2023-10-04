@@ -1,67 +1,37 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+const swaggerAutogen = require('swagger-autogen')();
 
-const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Contacts API',
-      version: '1.0.0',
-      description: `API documentation for the Contacts API. This API is your all-in-one solution for managing contact information with ease and precision. Designed to simplify contact management, it empowers you to create, retrieve, update, and delete contacts effortlessly.
+const doc = {
+  info: {
+    title: 'Contact API',
+    description: `API documentation for the Contacts API. This API is designed to help you efficiently manage your contact information. Whether you need to create, retrieve, update, or delete contacts, this API has got you covered. With a user-friendly interface and comprehensive functionality, you can seamlessly integrate contact management into your applications.
 
 **Key Features:**
 
-- **Create Contacts:** Use the POST endpoint to add new contacts to your database. Simply provide contact details such as first name, last name, email, favorite color, and birthday in JSON format. Creating and organizing contacts has never been simpler.
+- **Create Contacts:** Use the POST endpoint to add new contacts to your database, providing details like first name, last name, email, favorite color, and birthday in JSON format.
 
-- **Retrieve Contacts:** The GET endpoint offers the flexibility to fetch a list of all contacts or retrieve a specific contact by their unique ID. Seamlessly access contact information for your applications.
+- **Retrieve Contacts:** The GET endpoint allows you to fetch a list of all contacts or retrieve a specific contact by their unique ID.
 
-- **Update Contacts:** Need to update contact details? The PUT endpoint allows you to modify existing contacts with ease. Send the updated information in JSON format, and your database stays up-to-date.
+- **Update Contacts:** Easily update contact information using the PUT endpoint. Send the updated details in JSON format to modify existing contacts.
 
-- **Delete Contacts:** Remove unwanted contacts from your database effortlessly using the DELETE endpoint. Specify the contact's ID, and it's done.
+- **Delete Contacts:** Remove contacts from your database using the DELETE endpoint. Specify the contact's ID to delete a specific entry.
 
-**Sample Requests and Responses:** To assist you in getting started, we provide sample JSON requests and responses for each endpoint. These examples demonstrate how to interact with the API effectively.
+**Sample Requests and Responses:** We've provided sample JSON requests and responses for each endpoint to help you understand how to interact with the API effectively.
 
-**Error Handling:** Rest assured with our error responses and status codes. We've included clear error messages and codes to guide you through any unexpected scenarios.
+**Error Handling:** The API includes error responses and status codes to guide you in case of any issues.
 
-**API Documentation:** Dive into the comprehensive API documentation below. Each endpoint is detailed with expected request structures, response formats, and usage examples. Discover best practices and unleash the full potential of the Contacts API.
+**API Documentation:** Explore the detailed API documentation below to learn how to use each endpoint, the expected request structures, and response formats.
 
-Enhance your applications with seamless contact management. From creating new contacts to retrieving and updating existing ones, this API streamlines the process for a superior user experience. Take control of your contact data effortlessly.`
-    },
-    components: {
-      schemas: {
-        Contact: {
-          type: 'object',
-          properties: {
-            firstName: {
-              type: 'string'
-            },
-            lastName: {
-              type: 'string'
-            },
-            email: {
-              type: 'string',
-              unique: true
-            },
-            favoriteColor: {
-              type: 'string'
-            },
-            birthday: {
-              type: 'string',
-              format: 'date'
-            }
-          },
-          required: ['firstName', 'lastName', 'email']
-        }
-      }
-    }
+Start managing your contacts effortlessly with the Contacts API. Integrate it into your applications to streamline contact management and enhance user experiences.`
+
   },
-  // Define API routes to include in the documentation
-  apis: ['./routes/contactRoutes.js']
+  host: 'localhost:8080',
+  schemas: ['https or http']
 };
 
-const specs = swaggerJsdoc(options);
+const outputFile = './swagger.json';
+const endpointsFiles = ['./routes/contacts.js'];
 
-module.exports = (app) => {
-  // Serve Swagger documentation at /api-docs
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-};
+// generate swagger.json
+swaggerAutogen(outputFile, endpointsFiles, doc);
+console.log('Swagger runs successfully')
+

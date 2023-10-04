@@ -1,27 +1,37 @@
-// Import the Mongoose library
-const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
+const MongoClient = require('mongodb').MongoClient;
 
-// Load environment variables from a .env file
-require('dotenv').config();
+let _db;
 
-// Define a function to connect to the MongoDB database
-const connectDB = async () => {
-  try {
-    // Use Mongoose to establish a connection to the MongoDB database
-    await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: 'mycontacts',
-      useNewUrlParser: true, // Use new URL parser
-      useUnifiedTopology: true, // Use new server discovery and monitoring engine
-      autoCreate: false // Disable automatic creation
-    });
-
-    // If the connection is successful, log a success message
-    console.log('MongoDB connected Successfully');
-  } catch (error) {
-    // If there is an error during the connection attempt, log an error message
-    console.error(`MongoDB connection error: ${error}`);
+// Initialize the database connection
+const initDb = (callback) => {
+  if (_db) {
+    console.log('Database is already initialized!');
+    return callback(null, _db);
   }
+
+  MongoClient.connect(process.env.MONGODB_URI)
+    .then((client) => {
+      _db = client;
+      console.log('Connected to MongoDB successfully.'); 
+      callback(null, _db);
+    })
+    .catch((err) => {
+      console.error('Error connecting to MongoDB:', err); 
+      callback(err);
+    });
 };
 
-// Export the connectDB function to make it available to other parts of the application
-module.exports = connectDB;
+// Get the database instance
+const getDb = () => {
+  if (!_db) {
+    throw Error('Database not initialized');
+  }
+  return _db;
+};
+
+module.exports = {
+  initDb,
+  getDb
+};

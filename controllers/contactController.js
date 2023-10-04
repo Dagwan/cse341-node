@@ -1,90 +1,134 @@
-// Import the Contact model from the contactModel.js file
-const Contact = require('../models/contactModel');
+const mongodb = require('../db/db');
+const ObjectId = require('mongodb').ObjectId;
+
 
 // Create a new contact
-exports.createContact = async (req, res) => {
+const createContact = async (req, res) => {
   try {
-    // Create a new contact instance using the request body data
-    const contact = new Contact(req.body);
+    const contact = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      favoriteColor: req.body.favoriteColor,
+      birthday: req.body.birthday
+    };
 
-    // Save the new contact to the database
-    await contact.save();
+    const response = await mongodb.getDb().db().collection('contacts').insertOne(contact);
 
-    // Respond with a success status code (201) and the ID of the newly created contact in JSON format
-    res.status(201).json({ _id: contact._id });
+    if (response.acknowledged) {
+      res.status(201).json(response);
+    } else {
+      res.status(500).json(response.error || 'Some error occurred while creating the contact.');
+    }
   } catch (error) {
-    // If there's an error during contact creation, respond with a server error status code (500) and an error message
-    res.status(500).json({ error: 'Unable to create contact' });
+    if (error.code === 11000 && error.keyPattern.email === 1) {
+      // Handle duplicate email error
+      res.status(400).json({ error: 'Email address is already in use.' });
+    } else {
+      console.error('Error creating a contact:', error);
+      res.status(500).json({ error: 'An error occurred while creating the contact.' });
+    }
   }
 };
 
-// Read all contacts
-exports.getAllContacts = async (req, res) => {
-  try {
-    // Retrieve all contacts from the database
-    const contacts = await Contact.find();
 
-    // Respond with the list of contacts in JSON format
-    res.json(contacts);
+// Get all contacts
+const getAll = async (req, res) => {
+  try {
+    const result = await mongodb.getDb().db().collection('contacts').find();
+    const lists = await result.toArray();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(lists);
   } catch (error) {
-    // If there's an error while retrieving contacts, respond with a server error status code (500) and an error message
-    res.status(500).json({ error: 'Unable to retrieve contacts' });
+    console.error('Error fetching all contacts:', error);
+    res.status(500).json({ error: 'An error occurred while fetching all contacts.' });
   }
 };
 
-// Read a contact by ID
-exports.getContactById = async (req, res) => {
+// Get a single contact by ID
+const getSingle = async (req, res) => {
   try {
-    // Find a contact by its ID, which is specified in the request parameters
-    const contact = await Contact.findById(req.params.id);
+    const userId = req.params.id;
 
-    // If the contact is not found, respond with a not found status code (404) and an error message
+    if (!ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid contact ID format.' });
+    }
+
+    const contact = await mongodb.getDb().db().collection('contacts').findOne({ _id: new ObjectId(userId) });
+
     if (!contact) {
-      return res.status(404).json({ error: 'Contact not found' });
+      return res.status(404).json({ error: 'Contact not found.' });
     }
 
-    // Respond with the found contact in JSON format
-    res.json(contact);
+    res.status(200).json(contact);
   } catch (error) {
-    // If there's an error while retrieving the contact, respond with a server error status code (500) and an error message
-    res.status(500).json({ error: 'Unable to retrieve contact' });
+    console.error('Error fetching a single contact by ID:', error);
+    res.status(500).json({ error: 'An error occurred while fetching the contact.' });
   }
 };
 
-// Update contact
-exports.updateContactById = async (req, res) => {
+
+// Update an existing contact by ID
+const updateContact = async (req, res) => {
   try {
-    // Find and update a contact by its ID with the data from the request body
-    const updatedContact = await Contact.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
-    // If the contact is not found, respond with a not found status code (404) and an error message
-    if (!updatedContact) {
-      return res.status(404).json({ error: 'Contact not found' });
+    const userId = new ObjectId(req.params.id);
+    const contact = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      favoriteColor: req.body.favoriteColor,
+      birthday: req.body.birthday
+    };
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection('contacts')
+      .replaceOne({ _id: userId }, contact);
+    if (response.modifiedCount > 0) {
+      res.status(204).send();
+    } else {
+      res.status(404).json({ error: 'Contact not found.' });
     }
-
-    // Respond with a 204 No Content status code
-    res.status(204).end();
   } catch (error) {
-    // If there's an error while updating the contact, respond with a server error status code (500) and an error message
-    res.status(500).json({ error: 'Unable to update contact' });
+    console.error('Error updating a contact by ID:', error);
+    res.status(500).json({ error: 'An error occurred while updating the contact.' });
   }
 };
 
 // Delete a contact by ID
-exports.deleteContactById = async (req, res) => {
+const deleteContact = async (req, res) => {
   try {
-    // Find and remove a contact by its ID
-    const deletedContact = await Contact.findByIdAndRemove(req.params.id);
+    const userId = new ObjectId(req.params.id);
 
-    // If the contact is not found, respond with a not found status code (404) and an error message
-    if (!deletedContact) {
-      return res.status(404).json({ error: 'Contact not found' });
+    // Check if the contact exists before attempting to delete
+    const contactExists = await mongodb.getDb().db().collection('contacts').findOne({ _id: userId });
+    if (!contactExists) {
+      res.status(404).json({ error: 'Contact not found.' });
+      return;
     }
 
-    // Respond with a success message in JSON format
-    res.json({ message: 'Contact deleted successfully' });
+    const response = await mongodb.getDb().db().collection('contacts').deleteOne({ _id: userId });
+
+    if (response.deletedCount > 0) {
+      res.status(204).send();
+    } else {
+      res.status(500).json({ error: 'Some error occurred while deleting the contact.' });
+    }
   } catch (error) {
-    // If there's an error while deleting the contact, respond with a server error status code (500) and an error message
-    res.status(500).json({ error: 'Unable to delete contact' });
+    // Handle invalid ObjectId format and other errors
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      res.status(400).json({ error: 'Invalid contact ID format.' });
+    } else {
+      console.error('Error deleting a contact by ID:', error);
+      res.status(500).json({ error: 'An error occurred while deleting the contact.' });
+    }
   }
+};
+
+module.exports = {
+  createContact,
+  getAll,
+  getSingle,  
+  updateContact,
+  deleteContact
 };

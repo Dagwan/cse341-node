@@ -16,7 +16,7 @@ Content-Type: application/json
 GET http://localhost:8080/contacts
 
 ### get contacts by id
-GET http://localhost:8080/contacts/65172eeef1b52601f0df05fb
+GET http://localhost:8080/contacts/65172c7bba9e5547e327e236
 ###
 GET http://localhost:8080/contacts/65172c7bba9e5547e327e239
 ###
@@ -29,13 +29,13 @@ GET http://localhost:8080/contacts/6512c5b022ad27e62e7ebecd
 GET http://localhost:8080/contacts/6512b9443c62be61df16762
 
 ### update contact
-PUT http://localhost:8080/contacts/65172eeef1b52601f0df05fb
+PUT http://localhost:8080/contacts/651aa092e6d74d6444bfca83
 Content-Type: application/json
 
 {
-  "firstName": "James",
-  "lastName": "Blessing",
-  "email": "blessingjames@gmail.com.com",
+  "firstName": "Martha",
+  "lastName": "James",
+  "email": "martha@gmail.com.com",
   "favoriteColor": "Darkblue",
   "birthday": "2001-01-15"
 }
