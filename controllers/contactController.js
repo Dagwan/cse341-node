@@ -1,7 +1,6 @@
 const mongodb = require('../db/db');
 const ObjectId = require('mongodb').ObjectId;
 
-
 // Create a new contact
 const createContact = async (req, res) => {
   try {
@@ -31,7 +30,6 @@ const createContact = async (req, res) => {
   }
 };
 
-
 // Get all contacts
 const getAll = async (req, res) => {
   try {
@@ -54,7 +52,11 @@ const getSingle = async (req, res) => {
       return res.status(400).json({ error: 'Invalid contact ID format.' });
     }
 
-    const contact = await mongodb.getDb().db().collection('contacts').findOne({ _id: new ObjectId(userId) });
+    const contact = await mongodb
+      .getDb()
+      .db()
+      .collection('contacts')
+      .findOne({ _id: new ObjectId(userId) });
 
     if (!contact) {
       return res.status(404).json({ error: 'Contact not found.' });
@@ -66,7 +68,6 @@ const getSingle = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching the contact.' });
   }
 };
-
 
 // Update an existing contact by ID
 const updateContact = async (req, res) => {
@@ -101,7 +102,11 @@ const deleteContact = async (req, res) => {
     const userId = new ObjectId(req.params.id);
 
     // Check if the contact exists before attempting to delete
-    const contactExists = await mongodb.getDb().db().collection('contacts').findOne({ _id: userId });
+    const contactExists = await mongodb
+      .getDb()
+      .db()
+      .collection('contacts')
+      .findOne({ _id: userId });
     if (!contactExists) {
       res.status(404).json({ error: 'Contact not found.' });
       return;
@@ -128,7 +133,7 @@ const deleteContact = async (req, res) => {
 module.exports = {
   createContact,
   getAll,
-  getSingle,  
+  getSingle,
   updateContact,
   deleteContact
 };

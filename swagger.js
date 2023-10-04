@@ -22,7 +22,6 @@ const doc = {
 **API Documentation:** Explore the detailed API documentation below to learn how to use each endpoint, the expected request structures, and response formats.
 
 Start managing your contacts effortlessly with the Contacts API. Integrate it into your applications to streamline contact management and enhance user experiences.`
-
   },
   host: 'localhost:8080',
   schemas: ['https or http']
@@ -33,5 +32,4 @@ const endpointsFiles = ['./routes/index.js'];
 
 // generate swagger.json
 swaggerAutogen(outputFile, endpointsFiles, doc);
-console.log('Swagger runs successfully')
-
+console.log('Swagger runs successfully');

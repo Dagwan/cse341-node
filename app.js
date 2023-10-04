@@ -20,12 +20,11 @@ app.use('/', require('./routes'));
 // Initialize the database connection
 mongodb.initDb((err) => {
   if (err) {
-    console.error('Error initializing database:', err); 
+    console.error('Error initializing database:', err);
   } else {
     app.listen(port, () => {
       console.log(`Running and listening on Port ${port}`);
-      console.log('Contacts successfully initialize')
+      console.log('Contacts successfully initialize');
     });
   }
 });
-
