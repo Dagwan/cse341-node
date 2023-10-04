@@ -29,7 +29,7 @@ Start managing your contacts effortlessly with the Contacts API. Integrate it in
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./routes/contacts.js'];
+const endpointsFiles = ['./routes/index.js'];
 
 // generate swagger.json
 swaggerAutogen(outputFile, endpointsFiles, doc);

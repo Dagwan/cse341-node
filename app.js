@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 // Use routes defined in separate files
-app.use('/', require('./routes/contacts'));
+app.use('/', require('./routes'));
 
 // Initialize the database connection
 mongodb.initDb((err) => {
