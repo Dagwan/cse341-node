@@ -24,7 +24,7 @@ const doc = {
 Start managing your contacts effortlessly with the Contacts API. Integrate it into your applications to streamline contact management and enhance user experiences.`
   },
   host: 'cse341-4.onrender.com',
-  schemas: ['http']
+  schemes: ['https']
 };
 
 const outputFile = './swagger.json';
