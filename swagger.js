@@ -23,7 +23,7 @@ const doc = {
 
 Start managing your contacts effortlessly with the Contacts API. Integrate it into your applications to streamline contact management and enhance user experiences.`
   },
-  host: 'https://cse341-4.onrender.com/',
+  host: 'https://cse341-4.onrender.com',
   schemas: ['https']
 };
 
