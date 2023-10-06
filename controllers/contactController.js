@@ -4,6 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 // Create a new contact
 const createContact = async (req, res) => {
   try {
+    // Extract contact data from the request body
     const contact = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -12,12 +13,15 @@ const createContact = async (req, res) => {
       birthday: req.body.birthday
     };
 
+    // Insert the contact into the MongoDB collection
     const response = await mongodb.getDb().db().collection('contacts').insertOne(contact);
 
     if (response.acknowledged) {
-      res.status(201).json(response);
+      // Successfully created the contact
+      res.status(201).json({ success: 'Contact created successfully', contactId: response.insertedId });
     } else {
-      res.status(500).json(response.error || 'Some error occurred while creating the contact.');
+      // Error occurred while inserting the contact
+      res.status(500).json({ error: response.error || 'Error occurred while creating the contact.' });
     }
   } catch (error) {
     if (error.code === 11000 && error.keyPattern.email === 1) {
@@ -30,13 +34,17 @@ const createContact = async (req, res) => {
   }
 };
 
+
 // Get all contacts
 const getAll = async (req, res) => {
   try {
+    // Retrieve all contacts from the database
     const result = await mongodb.getDb().db().collection('contacts').find();
-    const lists = await result.toArray();
+    const contacts = await result.toArray();
+    
+    // Set the response content type and send the contacts as JSON
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(lists);
+    res.status(200).json(contacts);
   } catch (error) {
     console.error('Error fetching all contacts:', error);
     res.status(500).json({ error: 'An error occurred while fetching all contacts.' });
@@ -52,6 +60,7 @@ const getSingle = async (req, res) => {
       return res.status(400).json({ error: 'Invalid contact ID format.' });
     }
 
+    // Retrieve a single contact by its ID from the database
     const contact = await mongodb
       .getDb()
       .db()
@@ -62,6 +71,7 @@ const getSingle = async (req, res) => {
       return res.status(404).json({ error: 'Contact not found.' });
     }
 
+    // Successfully fetched the contact
     res.status(200).json(contact);
   } catch (error) {
     console.error('Error fetching a single contact by ID:', error);
@@ -69,10 +79,13 @@ const getSingle = async (req, res) => {
   }
 };
 
+
 // Update an existing contact by ID
 const updateContact = async (req, res) => {
   try {
     const userId = new ObjectId(req.params.id);
+    
+    // Extract updated contact data from the request body
     const contact = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -80,14 +93,19 @@ const updateContact = async (req, res) => {
       favoriteColor: req.body.favoriteColor,
       birthday: req.body.birthday
     };
+    
+    // Replace the existing contact with the updated data
     const response = await mongodb
       .getDb()
       .db()
       .collection('contacts')
       .replaceOne({ _id: userId }, contact);
+    
     if (response.modifiedCount > 0) {
+      // Successfully updated the contact
       res.status(204).send();
     } else {
+      // Contact not found
       res.status(404).json({ error: 'Contact not found.' });
     }
   } catch (error) {
@@ -107,17 +125,22 @@ const deleteContact = async (req, res) => {
       .db()
       .collection('contacts')
       .findOne({ _id: userId });
+
     if (!contactExists) {
       res.status(404).json({ error: 'Contact not found.' });
       return;
     }
 
+    // Delete the contact by ID
     const response = await mongodb.getDb().db().collection('contacts').deleteOne({ _id: userId });
 
     if (response.deletedCount > 0) {
+      // Successfully deleted the contact
+      console.log('Contact deleted successfully'); 
       res.status(204).send();
     } else {
-      res.status(500).json({ error: 'Some error occurred while deleting the contact.' });
+      // Error occurred while deleting the contact
+      res.status(500).json({ error: 'Error occurred while deleting the contact.' });
     }
   } catch (error) {
     // Handle invalid ObjectId format and other errors

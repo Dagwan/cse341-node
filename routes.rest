@@ -53,7 +53,7 @@ Content-Type: application/json
 }
 
 ### delete a contact
-DELETE http://localhost:8080/contacts/6520391121f66dace56af08a
+DELETE http://localhost:8080/contacts/65204127ac6f1553d25861a0
 
 
 // production
