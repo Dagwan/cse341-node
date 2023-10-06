@@ -4,9 +4,9 @@ POST http://localhost:8080/contacts
 Content-Type: application/json
 
 {
-  "firstName": "James",
-  "lastName": "Blessing",
-  "email": "blessingjames@gmail.com.com",
+  "firstName": "Julius",
+  "lastName": "Simon",
+  "email": "simon@gmail.com.com",
   "favoriteColor": "Green",
   "birthday": "1999-01-15"
 }
@@ -16,19 +16,13 @@ Content-Type: application/json
 GET http://localhost:8080/contacts
 
 ### get contacts by id
-GET http://localhost:8080/contacts/65172c7bba9e5547e327e236
-###
 GET http://localhost:8080/contacts/65172c7bba9e5547e327e239
 ###
 GET http://localhost:8080/contacts/65172c7cba9e5547e327e23c
 ###
-###
-GET http://localhost:8080/contacts/65172c7cba9e5547e327e23c
-
-### 
 GET http://localhost:8080/contacts/651732d2bc9d5f52dffce548
-
-### 
+###
+###
 GET http://localhost:8080/contacts/651be5e903ac3bd725aba32b
 
 ### 
@@ -40,20 +34,26 @@ GET http://localhost:8080/contacts/651d3d27a0f7f887db3eaac5
 ### 
 GET http://localhost:8080/contacts/651d4299450bf499c49dd913
 
+### 
+GET http://localhost:8080/contacts/651d8200cb4f80947149c900
+
+### 
+GET http://localhost:8080/contacts/651d820ccb4f80947149c901
+
 ### update contact
-PUT http://localhost:8080/contacts/651d4299450bf499c49dd913
+PUT http://localhost:8080/contacts/6520391121f66dace56af08a
 Content-Type: application/json
 
 {
-  "firstName": "Martha",
-  "lastName": "James",
-  "email": "martha@gmail.com.com",
+  "firstName": "Dorathy",
+  "lastName": "Mustapha",
+  "email": "dorathy@gmail.com.com",
   "favoriteColor": "Darkblue",
   "birthday": "2001-01-15"
 }
 
 ### delete a contact
-DELETE http://localhost:8080/contacts/651d4299450bf499c49dd913
+DELETE http://localhost:8080/contacts/6520391121f66dace56af08a
 
 
 // production
@@ -64,26 +64,27 @@ curl -X POST -H "Content-Type: application/json" -d '{
   "email": "amosmichale@gmail.com",
   "favoriteColor": "Blue",
   "birthday": "1990-01-01"
-}' https://cse341-3.onrender.com/
+}' https://cse341-4.onrender.com/contacts'
 
 ###Read All Contacts (GET):
-curl https://cse341-3.onrender.com/
+curl  https://cse341-3.onrender.com/contacts
 
 ###Read a Contact by ID (GET):
-curl https://cse341-3.onrender.com/65172c7bba9e5547e327e236
+curl  https://cse341-3.onrender.com/contacts/65172c7bba9e5547e327e239
 
 ### Update a Contact by ID (PUT):
 curl -X PUT -H "Content-Type: application/json" -d '{
   "firstName": "Michael",
   "lastName": "Amos",
-  "email": "moseschris@gmail.com.com",
+  "email": "moseschris@gmail.com",
   "favoriteColor": "White",
   "birthday": "1995-02-15"
-}' https://cse341-3.onrender.com/651732d2bc9d5f52dffce548
+}' https://cse341-3.onrender.com/contacts/65172c7bba9e5547e327e239
+
 
 
 ### Delete a Contact by ID (DELETE):
-curl -X DELETE https://cse341-3.onrender.com/65173264bc9d5f52dffce544
+curl -X DELETE https://cse341-3.onrender.com/contacts/651d805fcb4f80947149c8fd
 
 
 

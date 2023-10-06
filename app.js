@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/db');
+const models = require('./models/contactModel')
 const cors = require('cors');
 
 const port = process.env.PORT || 8080;
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
 
 // Use routes defined in separate files
 app.use('/', require('./routes'));
+
+app.use(models)
 
 // Initialize the database connection
 mongodb.initDb((err) => {
