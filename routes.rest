@@ -4,9 +4,9 @@ POST http://localhost:8080/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Julius",
+  "firstName": "Hope",
   "lastName": "Simon",
-  "email": "simon@gmail.com.com",
+  "email": "hopesimon@gmail.com.com",
   "favoriteColor": "Green",
   "birthday": "1999-01-15"
 }
@@ -41,7 +41,7 @@ GET http://localhost:8080/contacts/651d8200cb4f80947149c900
 GET http://localhost:8080/contacts/651d820ccb4f80947149c901
 
 ### update contact
-PUT http://localhost:8080/contacts/6520391121f66dace56af08a
+PUT http://localhost:8080/contacts/652077a19dcf632d78324d90
 Content-Type: application/json
 
 {
@@ -53,15 +53,15 @@ Content-Type: application/json
 }
 
 ### delete a contact
-DELETE http://localhost:8080/contacts/65204127ac6f1553d25861a0
+DELETE http://localhost:8080/contacts/652077a19dcf632d78324d90
 
 
 // production
 ### Create a New Contact (POST):
 curl -X POST -H "Content-Type: application/json" -d '{
-  "firstName": "Michael",
-  "lastName": "Amos",
-  "email": "amosmichale@gmail.com",
+  "firstName": "Solomon",
+  "lastName": "Josiah",
+  "email": "solomon@gmail.com",
   "favoriteColor": "Blue",
   "birthday": "1990-01-01"
 }' https://cse341-4.onrender.com/contacts'
@@ -79,12 +79,12 @@ curl -X PUT -H "Content-Type: application/json" -d '{
   "email": "moseschris@gmail.com",
   "favoriteColor": "White",
   "birthday": "1995-02-15"
-}' https://cse341-3.onrender.com/contacts/65172c7bba9e5547e327e239
+}' https://cse341-3.onrender.com/contacts/6520765f06fa9083db2c5581
 
 
 
 ### Delete a Contact by ID (DELETE):
-curl -X DELETE https://cse341-3.onrender.com/contacts/651d805fcb4f80947149c8fd
+curl -X DELETE https://cse341-3.onrender.com/contacts/65172c7bba9e5547e327e239
 
 
 
